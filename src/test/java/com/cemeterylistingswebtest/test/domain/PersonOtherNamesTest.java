@@ -6,10 +6,12 @@
 
 package com.cemeterylistingswebtest.test.domain;
 
-import com.cemeterylistingsweb.repository.PublishedDeceasedListingRepository;
+import com.cemeterylistingsweb.repository.PersonOtherNamesRepository;
 import com.cemeterylistingswebtest.test.ConnectionConfigTest;
+import static com.cemeterylistingswebtest.test.domain.UserRoleTest.ctx;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import static org.testng.Assert.*;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
@@ -18,27 +20,28 @@ import org.testng.annotations.Test;
 
 /**
  *
- * @author ME
+ * @author Kurvin Hendricks
  */
-public class PublishedDeceasedListingTest {
+public class PersonOtherNamesTest {
     
-    public PublishedDeceasedListingTest() {
+    public PersonOtherNamesTest() {
     }
-    
-    private static Long id;
-    public static ApplicationContext ctx;
-    public static PublishedDeceasedListingRepository repo;
 
     // TODO add test methods here.
     // The methods must be annotated with annotation @Test. For example:
     //
+    
+    private static Long id;
+    public static ApplicationContext ctx;
+    public static PersonOtherNamesRepository repo;
+    
      @Test
      public void create() {
          System.out.println("here");
-         repo = ctx.getBean(PublishedDeceasedListingRepository.class);
+         repo = ctx.getBean(PersonOtherNamesRepository.class);
      }
-     
-     @Test(dependsOnMethods="create")
+    
+    @Test(dependsOnMethods="create")
      public void read(){
          
      }
@@ -55,12 +58,11 @@ public class PublishedDeceasedListingTest {
 
     @BeforeClass
     public static void setUpClass() throws Exception {
-         ctx = new AnnotationConfigApplicationContext(ConnectionConfigTest.class);
+        ctx = new AnnotationConfigApplicationContext(ConnectionConfigTest.class);
     }
 
     @AfterClass
     public static void tearDownClass() throws Exception {
-       
     }
 
     @BeforeMethod

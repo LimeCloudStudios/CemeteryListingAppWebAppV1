@@ -17,18 +17,17 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 
 /**
  *
- * @author ME
+ * @author Kurvin Hendricks
  */
 @Entity
-public class PublishedDeceasedListing implements Serializable{
+public class RequiresApprovalDeceasedListing implements Serializable{
     private static final long serialVersionUID = 1L;
     @Id // deaulft 
     @GeneratedValue(strategy = GenerationType.AUTO)
-    Long PublishedListingID;
+    Long RequiresApprovalDeceasedListingID;
     String firstName;
     String surname;
     String maidenName;
@@ -46,10 +45,10 @@ public class PublishedDeceasedListing implements Serializable{
     @JoinColumn(name="Other_names")
     List<PersonOtherNames> names;
     
-    public PublishedDeceasedListing(){}
+    public RequiresApprovalDeceasedListing(){}
 
-    private PublishedDeceasedListing(Builder aThis) {
-       this.PublishedListingID = aThis.PublishedListingID;
+    private RequiresApprovalDeceasedListing(Builder aThis) {
+       this.RequiresApprovalDeceasedListingID = aThis.RequiresApprovalDeceasedListingID;
        this.cemeteryID = aThis.cemeteryID;
        this.dateOfBirth = aThis.dateOfBirth;
        this.firstName = aThis.firstName;
@@ -63,11 +62,10 @@ public class PublishedDeceasedListing implements Serializable{
        this.maidenName = aThis.maidenName;
        this.memeberApprovedID = aThis.memeberApprovedID;
        this.memeberSubmitID = aThis.memeberSubmitID;
-       this.names = aThis.names;
     }
     
-     private PublishedDeceasedListing(PublishedDeceasedListing aThis) {
-       this.PublishedListingID = aThis.PublishedListingID;
+     private RequiresApprovalDeceasedListing(RequiresApprovalDeceasedListing aThis) {
+       this.RequiresApprovalDeceasedListingID = aThis.RequiresApprovalDeceasedListingID;
        this.cemeteryID = aThis.cemeteryID;
        this.dateOfBirth = aThis.dateOfBirth;
        this.firstName = aThis.firstName;
@@ -84,8 +82,8 @@ public class PublishedDeceasedListing implements Serializable{
        this.names = aThis.names;
     } 
 
-    public Long getPublishedListingID() {
-        return PublishedListingID;
+    public Long getRequiresApprovalDeceasedListingID() {
+        return RequiresApprovalDeceasedListingID;
     }
 
     public String getFirstName() {
@@ -145,7 +143,7 @@ public class PublishedDeceasedListing implements Serializable{
     }
     
     public static class Builder{
-        Long PublishedListingID;
+        Long RequiresApprovalDeceasedListingID;
         String firstName;
         String surname;
         String maidenName;
@@ -161,8 +159,8 @@ public class PublishedDeceasedListing implements Serializable{
         Long memeberSubmitID;
         List<PersonOtherNames> names;
 
-        public Builder setPublishedListingID(Long PublishedListingID) {
-            this.PublishedListingID = PublishedListingID;
+        public Builder setPublishedListingID(Long RequiresApprovalDeceasedListingID) {
+            this.RequiresApprovalDeceasedListingID = RequiresApprovalDeceasedListingID;
             return this;
         }
 
@@ -237,16 +235,16 @@ public class PublishedDeceasedListing implements Serializable{
         
         
         
-        public PublishedDeceasedListing build(){
-            return new PublishedDeceasedListing(this);
+        public RequiresApprovalDeceasedListing build(){
+            return new RequiresApprovalDeceasedListing(this);
         }
         
     }
-    
-     @Override
+
+    @Override
     public int hashCode() {
         int hash = 7;
-        hash = 53 * hash + Objects.hashCode(this.PublishedListingID);
+        hash = 29 * hash + Objects.hashCode(this.RequiresApprovalDeceasedListingID);
         return hash;
     }
 
@@ -258,10 +256,12 @@ public class PublishedDeceasedListing implements Serializable{
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final PublishedDeceasedListing other = (PublishedDeceasedListing) obj;
-        if (!Objects.equals(this.PublishedListingID, other.PublishedListingID)) {
+        final RequiresApprovalDeceasedListing other = (RequiresApprovalDeceasedListing) obj;
+        if (!Objects.equals(this.RequiresApprovalDeceasedListingID, other.RequiresApprovalDeceasedListingID)) {
             return false;
         }
         return true;
     }
+    
+    
 }

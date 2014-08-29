@@ -10,7 +10,11 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -20,16 +24,19 @@ import javax.persistence.Id;
 public class Subscriber implements Serializable{
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     Long memberID;
     String username;
     String email;
     String pwd;
     String firstName;
     String surname;
-    Date lastContributionYear;
-    Long userRoleID;
-    Date subscriptionDate;
-    Date validUntil;
+    String lastContributionYear;
+    @OneToOne
+    @JoinColumn(name="userRole")
+    UserRole userRoleID;
+    String subscriptionDate;
+    String validUntil;
     
     public Subscriber(){}
 
@@ -83,19 +90,19 @@ public class Subscriber implements Serializable{
         return surname;
     }
 
-    public Date getLastContributionYear() {
+    public String getLastContributionYear() {
         return lastContributionYear;
     }
 
-    public Long getUserRoleID() {
+    public UserRole getUserRoleID() {
         return userRoleID;
     }
 
-    public Date getSubscriptionDate() {
+    public String getSubscriptionDate() {
         return subscriptionDate;
     }
 
-    public Date getValidUntil() {
+    public String getValidUntil() {
         return validUntil;
     }
         
@@ -106,13 +113,13 @@ public class Subscriber implements Serializable{
         String pwd;
         String firstName;
         String surname;
-        Date lastContributionYear;
-        Long userRoleID;
-        Date subscriptionDate;
-        Date validUntil;
+        String lastContributionYear;
+        UserRole userRoleID;
+        String subscriptionDate;
+        String validUntil;
 
-        public Builder setCemeteryID(Long CemeteryID) {
-            this.memberID = CemeteryID;
+        public Builder setMemeteryID(Long MemeteryID) {
+            this.memberID = MemeteryID;
             return this;
         }
 
@@ -141,22 +148,22 @@ public class Subscriber implements Serializable{
             return this;
         }
 
-        public Builder setLastContributionYear(Date lastContributionYear) {
+        public Builder setLastContributionYear(String lastContributionYear) {
             this.lastContributionYear = lastContributionYear;
             return this;
         }
 
-        public Builder setUserRoleID(Long userRoleID) {
+        public Builder setUserRoleID(UserRole userRoleID) {
             this.userRoleID = userRoleID;
             return this;
         }
 
-        public Builder setSubscriptionDate(Date subscriptionDate) {
+        public Builder setSubscriptionDate(String subscriptionDate) {
             this.subscriptionDate = subscriptionDate;
             return this;
         }
 
-        public Builder setValidUntil(Date validUntil) {
+        public Builder setValidUntil(String validUntil) {
             this.validUntil = validUntil;
             return this;
         }
