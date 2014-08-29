@@ -12,6 +12,7 @@ import com.cemeterylistingsweb.repository.SubscriberRepository;
 import com.cemeterylistingsweb.repository.UserRoleRepository;
 import com.cemeterylistingswebtest.test.ConnectionConfigTest;
 import java.util.Date;
+import junit.framework.Assert;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import static org.testng.Assert.*;
@@ -38,6 +39,8 @@ public class SubscriberTest {
     public static SubscriberRepository repo;
     public static UserRoleRepository userRepo;
     
+    
+    
      @Test
      public void create() {
          System.out.println("here");
@@ -63,21 +66,41 @@ public class SubscriberTest {
             
          
          repo.save(newSub);
+         id = newSub.getMemberID();
      }
      
      @Test(dependsOnMethods="create")
      public void read(){
+         repo = ctx.getBean(SubscriberRepository.class);
          
+         Assert.assertNotNull(repo.findOne(id).getMemberID());
      }
      
      @Test(dependsOnMethods="read")
      public void update(){
+         repo = ctx.getBean(SubscriberRepository.class);
          
+         Subscriber oldSub = repo.findOne(id);
+         Subscriber update = new Subscriber.Builder()
+                 .setEmail(oldSub.getEmail())
+                 .setFirstName(oldSub.getFirstName())
+                 .setPwd("drowning")
+                 .setMemberID(oldSub.getMemberID())
+                 .setUserRoleID(oldSub.getUserRoleID())
+                 .setUsername(oldSub.getUsername())
+                 .build();
+         
+        //repo.delete(id);
+        repo.save(update);
+                 
      }
      
      @Test(dependsOnMethods="update")
      public void delete(){
+         repo = ctx.getBean(SubscriberRepository.class);
          
+         Subscriber oldSub = repo.findOne(id);
+         repo.delete(id);
      }
 
     @BeforeClass

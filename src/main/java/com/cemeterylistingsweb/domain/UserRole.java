@@ -35,6 +35,9 @@ public class UserRole implements Serializable{
         this.userRoleID = aThis.userRoleID;
     }
 
+    public UserRole() {
+    }
+
     public Long getUserRoleID() {
         return userRoleID;
     }

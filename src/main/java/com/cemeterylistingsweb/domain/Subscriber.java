@@ -118,8 +118,8 @@ public class Subscriber implements Serializable{
         String subscriptionDate;
         String validUntil;
 
-        public Builder setMemeteryID(Long MemeteryID) {
-            this.memberID = MemeteryID;
+        public Builder setMemberID(Long MemberID) {
+            this.memberID = MemberID;
             return this;
         }
 
