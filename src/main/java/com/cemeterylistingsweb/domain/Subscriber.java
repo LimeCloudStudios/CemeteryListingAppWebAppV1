@@ -15,6 +15,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import org.apache.derby.iapi.types.SQLDate;
 
 /**
  *
@@ -31,11 +32,11 @@ public class Subscriber implements Serializable{
     String pwd;
     String firstName;
     String surname;
-    String lastContributionYear;
+    java.sql.Date lastContributionYear;
     @OneToOne
     @JoinColumn(name="userRole")
     UserRole userRoleID;
-    String subscriptionDate;
+    java.sql.Date subscriptionDate;
     String validUntil;
     
     public Subscriber(){}
@@ -90,7 +91,7 @@ public class Subscriber implements Serializable{
         return surname;
     }
 
-    public String getLastContributionYear() {
+    public java.sql.Date getLastContributionYear() {
         return lastContributionYear;
     }
 
@@ -98,7 +99,7 @@ public class Subscriber implements Serializable{
         return userRoleID;
     }
 
-    public String getSubscriptionDate() {
+    public java.sql.Date getSubscriptionDate() {
         return subscriptionDate;
     }
 
@@ -113,9 +114,9 @@ public class Subscriber implements Serializable{
         String pwd;
         String firstName;
         String surname;
-        String lastContributionYear;
+        java.sql.Date lastContributionYear;
         UserRole userRoleID;
-        String subscriptionDate;
+        java.sql.Date subscriptionDate;
         String validUntil;
 
         public Builder setMemberID(Long MemberID) {
@@ -148,7 +149,7 @@ public class Subscriber implements Serializable{
             return this;
         }
 
-        public Builder setLastContributionYear(String lastContributionYear) {
+        public Builder setLastContributionYear(java.sql.Date lastContributionYear) {
             this.lastContributionYear = lastContributionYear;
             return this;
         }
@@ -158,7 +159,7 @@ public class Subscriber implements Serializable{
             return this;
         }
 
-        public Builder setSubscriptionDate(String subscriptionDate) {
+        public Builder setSubscriptionDate(java.sql.Date subscriptionDate) {
             this.subscriptionDate = subscriptionDate;
             return this;
         }

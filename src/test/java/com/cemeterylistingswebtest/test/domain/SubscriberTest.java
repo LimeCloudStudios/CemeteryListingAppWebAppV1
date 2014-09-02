@@ -11,8 +11,10 @@ import com.cemeterylistingsweb.domain.UserRole;
 import com.cemeterylistingsweb.repository.SubscriberRepository;
 import com.cemeterylistingsweb.repository.UserRoleRepository;
 import com.cemeterylistingswebtest.test.ConnectionConfigTest;
+import java.util.Calendar;
 import java.util.Date;
 import junit.framework.Assert;
+import org.apache.derby.iapi.types.SQLDate;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import static org.testng.Assert.*;
@@ -48,7 +50,21 @@ public class SubscriberTest {
          repo = ctx.getBean(SubscriberRepository.class);
          userRepo = ctx.getBean(UserRoleRepository.class);
          
-         Date date = new Date();
+          Calendar calendar = Calendar.getInstance();
+            // set Date portion to January 1, 1970
+            calendar.set(Calendar.YEAR, 2008);
+            calendar.set(Calendar.MONTH, Calendar.FEBRUARY);
+            calendar.set(Calendar.DATE, 4);
+
+            // normalize the object
+           /* calendar.set(Calendar.HOUR_OF_DAY, 0);
+            calendar.set(Calendar.MINUTE, 0);
+            calendar.set(Calendar.SECOND, 0);
+            calendar.set(Calendar.MILLISECOND, 0);
+            */
+            java.sql.Date javaSqlDate = new java.sql.Date(calendar.getTime().getTime());
+         
+                 
          UserRole user = new UserRole.Builder()
                  .setLevel(1)
                  .build();
@@ -61,6 +77,7 @@ public class SubscriberTest {
                     .setSurname("Osulivan")
                     .setPwd("jesus")
                     .setUsername("ManiFredOssy")
+                    .setSubscriptionDate(javaSqlDate)
                     .setUserRoleID(user)
                     .build();
             
@@ -70,13 +87,32 @@ public class SubscriberTest {
      }
      
      @Test(dependsOnMethods="create")
-     public void read(){
-         repo = ctx.getBean(SubscriberRepository.class);
-         
+     public void read(){  
+         repo = ctx.getBean(SubscriberRepository.class);         
          Assert.assertNotNull(repo.findOne(id).getMemberID());
+         
      }
      
-     @Test(dependsOnMethods="read")
+     @Test(dependsOnMethods="create")
+     public void testDate(){
+         Calendar calendar = Calendar.getInstance();
+         calendar.set(Calendar.YEAR, 2008);
+         calendar.set(Calendar.MONTH, Calendar.FEBRUARY);
+         calendar.set(Calendar.DATE, 4);
+         java.sql.Date javaSqlDate = new java.sql.Date(calendar.getTime().getTime());
+         repo = ctx.getBean(SubscriberRepository.class);
+         
+         Calendar cal = Calendar.getInstance();
+         cal.setTime(javaSqlDate);
+         int year =  cal.get(Calendar.YEAR);
+         int month =  cal.get(Calendar.MONTH);
+         int day =  cal.get(Calendar.DAY_OF_MONTH);
+         Assert.assertEquals(year, 2008);
+         Assert.assertEquals(month, 01); //counts from 0
+         Assert.assertEquals(day, 4);
+     }
+     
+     @Test(dependsOnMethods="testDate")
      public void update(){
          repo = ctx.getBean(SubscriberRepository.class);
          
