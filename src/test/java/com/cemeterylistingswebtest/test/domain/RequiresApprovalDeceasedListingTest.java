@@ -7,9 +7,14 @@
 package com.cemeterylistingswebtest.test.domain;
 
 import com.cemeterylistingsweb.domain.RequiresApprovalDeceasedListing;
+import com.cemeterylistingsweb.domain.Subscriber;
+import com.cemeterylistingsweb.domain.UserRole;
 import com.cemeterylistingsweb.repository.RequiresApprovalDeceasedListingRepository;
+import com.cemeterylistingsweb.repository.SubscriberRepository;
+import com.cemeterylistingsweb.repository.UserRoleRepository;
 import com.cemeterylistingswebtest.test.ConnectionConfigTest;
 import static com.cemeterylistingswebtest.test.domain.PersonOtherNamesTest.ctx;
+import java.util.Calendar;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.testng.Assert;
@@ -32,15 +37,48 @@ public class RequiresApprovalDeceasedListingTest {
     // TODO add test methods here.
     // The methods must be annotated with annotation @Test. For example:
     //
-    private static Long id;
+    private static Long id, subID, userRoleID;
     public static ApplicationContext ctx;
-    public static RequiresApprovalDeceasedListingRepository repo;
+    public static RequiresApprovalDeceasedListingRepository repoList;
+    public static SubscriberRepository subRepo;
+    public static UserRoleRepository userRepo;
     
      @Test
      public void create() {
           System.out.println("here");
-         repo = ctx.getBean(RequiresApprovalDeceasedListingRepository.class);
+         repoList = ctx.getBean(RequiresApprovalDeceasedListingRepository.class);
+         subRepo = ctx.getBean(SubscriberRepository.class);
+         userRepo = ctx.getBean(UserRoleRepository.class);
          
+         //Initialise date
+         Calendar calendar = Calendar.getInstance();
+         calendar.set(Calendar.YEAR, 2008);
+         calendar.set(Calendar.MONTH, Calendar.FEBRUARY);
+         calendar.set(Calendar.DATE, 4);
+          
+         java.sql.Date javaSqlDate = new java.sql.Date(calendar.getTime().getTime());
+         
+         //Initialise user role                
+         UserRole userRole = new UserRole.Builder()
+                 .setLevel(1)
+                 .build();
+         userRepo.save(userRole);
+         userRoleID = userRole.getUserRoleID();
+         
+         //Initialise subscriber
+         Subscriber newSub = new Subscriber.Builder()
+                .setEmail("manfredOsulivan@horseRaddish.com")
+                .setFirstName("Manfred")
+                .setSurname("Osulivan")
+                .setPwd("jesus")
+                .setUsername("ManiFredOssy")
+                .setSubscriptionDate(javaSqlDate)
+                .setUserRoleID(userRole)
+                .build();
+         subRepo.save(newSub);
+         subID = newSub.getSubscriberID();
+         
+         //Finally Initialise RequiresApprovalDeceasedListing
          RequiresApprovalDeceasedListing newListing = new RequiresApprovalDeceasedListing.Builder()
                  .setFirstName("Hendrika")
                  .setSurname("Fourie")
@@ -53,37 +91,39 @@ public class RequiresApprovalDeceasedListingTest {
                  .setImageOfBurialSite("/images/001.jpg")
                  .setLastKnownContactName("Berry")
                  .setLastKnownContactNumber("0725576482")
+                 .setSubscriberSubmitID(subID)
                  //cemetery id
-                 //member submitted id
+                 //subscriber submitted id
                  //names
                  
                  .build();
          
-         repo.save(newListing);
+         repoList.save(newListing);
          id = newListing.getRequiresApprovalDeceasedListingID();
      }
      
      @Test(dependsOnMethods="create")
      public void read(){
-         repo = ctx.getBean(RequiresApprovalDeceasedListingRepository.class);
-         Assert.assertEquals(repo.findOne(id).getFirstName(), "Hendrika");
-         Assert.assertEquals(repo.findOne(id).getSurname()  , "Fourie" );
-         Assert.assertEquals(repo.findOne(id).getMaidenName()  , "Gerber" );
-         Assert.assertEquals(repo.findOne(id).getGender()  , "Female" );
-         Assert.assertEquals(repo.findOne(id).getDateOfBirth()  , "08/06/1969" );
-         Assert.assertEquals(repo.findOne(id).getDateOfDeath()  , "14/02/2005" );
-         Assert.assertEquals(repo.findOne(id).getGraveInscription()  , "Hippiest person eva" );
-         Assert.assertEquals(repo.findOne(id).getGraveNumber()  , "2456" );
-         Assert.assertEquals(repo.findOne(id).getImageOfBurialSite()  , "/images/001.jpg" );
-         Assert.assertEquals(repo.findOne(id).getLastKnownContactName()  ,"Berry"  );
-         Assert.assertEquals(repo.findOne(id).getLastKnownContactNumber()  , "0725576482" );
+         repoList = ctx.getBean(RequiresApprovalDeceasedListingRepository.class);
+         Assert.assertEquals(repoList.findOne(id).getFirstName(), "Hendrika");
+         Assert.assertEquals(repoList.findOne(id).getSurname()  , "Fourie" );
+         Assert.assertEquals(repoList.findOne(id).getMaidenName()  , "Gerber" );
+         Assert.assertEquals(repoList.findOne(id).getGender()  , "Female" );
+         Assert.assertEquals(repoList.findOne(id).getDateOfBirth()  , "08/06/1969" );
+         Assert.assertEquals(repoList.findOne(id).getDateOfDeath()  , "14/02/2005" );
+         Assert.assertEquals(repoList.findOne(id).getGraveInscription()  , "Hippiest person eva" );
+         Assert.assertEquals(repoList.findOne(id).getGraveNumber()  , "2456" );
+         Assert.assertEquals(repoList.findOne(id).getImageOfBurialSite()  , "/images/001.jpg" );
+         Assert.assertEquals(repoList.findOne(id).getLastKnownContactName()  ,"Berry"  );
+         Assert.assertEquals(repoList.findOne(id).getLastKnownContactNumber()  , "0725576482" );
+         Assert.assertNotNull(repoList.findOne(id).getSubscriberSubmitID());
      }
      
      @Test(dependsOnMethods="read")
      public void update(){
-         repo = ctx.getBean(RequiresApprovalDeceasedListingRepository.class);
+         repoList = ctx.getBean(RequiresApprovalDeceasedListingRepository.class);
          
-         RequiresApprovalDeceasedListing oldListing = repo.findOne(id);
+         RequiresApprovalDeceasedListing oldListing = repoList.findOne(id);
          
          RequiresApprovalDeceasedListing updateListing = new RequiresApprovalDeceasedListing.Builder()
                  .setFirstName(oldListing.getFirstName())
@@ -97,32 +137,41 @@ public class RequiresApprovalDeceasedListingTest {
                  .setImageOfBurialSite(oldListing.getImageOfBurialSite())
                  .setLastKnownContactName(oldListing.getLastKnownContactName())
                  .setLastKnownContactNumber(oldListing.getLastKnownContactNumber())
+                 .setSubscriberSubmitID(oldListing.getSubscriberSubmitID())
                  .build();
          
-         repo.save(updateListing);
-         repo.delete(repo.findOne(id));
+         repoList.save(updateListing);
+         repoList.delete(repoList.findOne(id));
          
          id = updateListing.getRequiresApprovalDeceasedListingID();
      }
      @Test(dependsOnMethods="update")
      public void readUpdated(){
-         repo = ctx.getBean(RequiresApprovalDeceasedListingRepository.class);
-         Assert.assertEquals(repo.findOne(id).getFirstName(), "Hendrika");
-         Assert.assertEquals(repo.findOne(id).getSurname()  , "Smith" );
-         Assert.assertEquals(repo.findOne(id).getMaidenName()  , "Gerber" );
-         Assert.assertEquals(repo.findOne(id).getGender()  , "Female" );
-         Assert.assertEquals(repo.findOne(id).getDateOfBirth()  , "08/06/1969" );
-         Assert.assertEquals(repo.findOne(id).getDateOfDeath()  , "14/02/2005" );
-         Assert.assertEquals(repo.findOne(id).getGraveInscription()  , "Hippiest person eva" );
-         Assert.assertEquals(repo.findOne(id).getGraveNumber()  , "2456" );
-         Assert.assertEquals(repo.findOne(id).getImageOfBurialSite()  , "/images/001.jpg" );
-         Assert.assertEquals(repo.findOne(id).getLastKnownContactName()  ,"Berry"  );
-         Assert.assertEquals(repo.findOne(id).getLastKnownContactNumber()  , "0725576482" );
+         repoList = ctx.getBean(RequiresApprovalDeceasedListingRepository.class);
+         Assert.assertEquals(repoList.findOne(id).getFirstName(), "Hendrika");
+         Assert.assertEquals(repoList.findOne(id).getSurname()  , "Smith" );
+         Assert.assertEquals(repoList.findOne(id).getMaidenName()  , "Gerber" );
+         Assert.assertEquals(repoList.findOne(id).getGender()  , "Female" );
+         Assert.assertEquals(repoList.findOne(id).getDateOfBirth()  , "08/06/1969" );
+         Assert.assertEquals(repoList.findOne(id).getDateOfDeath()  , "14/02/2005" );
+         Assert.assertEquals(repoList.findOne(id).getGraveInscription()  , "Hippiest person eva" );
+         Assert.assertEquals(repoList.findOne(id).getGraveNumber()  , "2456" );
+         Assert.assertEquals(repoList.findOne(id).getImageOfBurialSite()  , "/images/001.jpg" );
+         Assert.assertEquals(repoList.findOne(id).getLastKnownContactName()  ,"Berry"  );
+         Assert.assertEquals(repoList.findOne(id).getLastKnownContactNumber()  , "0725576482" );
+         Assert.assertNotNull(repoList.findOne(id).getSubscriberSubmitID());
      }
      @Test(dependsOnMethods="readUpdated")
      public void delete(){
-         repo = ctx.getBean(RequiresApprovalDeceasedListingRepository.class);
-         repo.delete(repo.findOne(id));
+         repoList = ctx.getBean(RequiresApprovalDeceasedListingRepository.class);
+         subRepo = ctx.getBean(SubscriberRepository.class);
+         userRepo = ctx.getBean(UserRoleRepository.class);
+         
+        // userRepo.delete(userRepo.findOne(userRoleID)); //cant delete this here because it is deleted in the update, so do we add it somehow in the update, need to take a break though
+         subRepo.delete (subRepo.findOne(subID));
+         repoList.delete(repoList.findOne(id));
+         
+         
      }
 
     @BeforeClass

@@ -41,8 +41,8 @@ public class PublishedDeceasedListing implements Serializable{
     String lastKnownContactName;
     String lastKnownContactNumber;
     Long cemeteryID;
-    Long memberApprovedID;
-    Long memberSubmitID;
+    Long subscriberApprovedID;
+    Long subscriberSubmitID;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name="Other_names")
     List<PersonOtherNames> names;
@@ -63,8 +63,8 @@ public class PublishedDeceasedListing implements Serializable{
        this.lastKnownContactNumber = aThis.lastKnownContactNumber;
        this.surname = aThis.surname;
        this.maidenName = aThis.maidenName;
-       this.memberApprovedID = aThis.memberApprovedID;
-       this.memberSubmitID = aThis.memberSubmitID;
+       this.subscriberApprovedID = aThis.subscriberApprovedID;
+       this.subscriberSubmitID = aThis.subscriberSubmitID;
        this.names = aThis.names;
     }
     
@@ -82,8 +82,8 @@ public class PublishedDeceasedListing implements Serializable{
        this.lastKnownContactNumber = aThis.lastKnownContactNumber;
        this.surname = aThis.surname;
        this.maidenName = aThis.maidenName;
-       this.memberApprovedID = aThis.memberApprovedID;
-       this.memberSubmitID = aThis.memberSubmitID;
+       this.subscriberApprovedID = aThis.subscriberApprovedID;
+       this.subscriberSubmitID = aThis.subscriberSubmitID;
        this.names = aThis.names;
     } 
 
@@ -139,12 +139,12 @@ public class PublishedDeceasedListing implements Serializable{
         return cemeteryID;
     }
 
-    public Long getMemberApprovedID() {
-        return memberApprovedID;
+    public Long getSubscriberApprovedID() {
+        return subscriberApprovedID;
     }
 
-    public Long getMemberSubmitID() {
-        return memberSubmitID;
+    public Long getSubscriberSubmitID() {
+        return subscriberSubmitID;
     }
 
     public List<PersonOtherNames> getNames() {
@@ -165,8 +165,8 @@ public class PublishedDeceasedListing implements Serializable{
         String lastKnownContactName;
         String lastKnownContactNumber;
         Long cemeteryID;
-        Long memberApprovedID;
-        Long memberSubmitID;
+        Long subscriberApprovedID;
+        Long subscriberSubmitID;
         List<PersonOtherNames> names;
 
         public Builder setPublishedListingID(Long PublishedListingID) {
@@ -233,13 +233,13 @@ public class PublishedDeceasedListing implements Serializable{
             return this;
         }
 
-        public Builder setMemeberApprovedID(Long memberApprovedID) {
-            this.memberApprovedID = memberApprovedID;
+        public Builder setSubscriberApprovedID(Long memberApprovedID) {
+            this.subscriberApprovedID = memberApprovedID;
             return this;
         }
 
-        public Builder setMemeberSubmitID(Long memberSubmitID) {
-            this.memberSubmitID = memberSubmitID;
+        public Builder setSubscriberSubmitID(Long subscriberSubmitID) {
+            this.subscriberSubmitID = subscriberSubmitID;
             return this;
         }
 

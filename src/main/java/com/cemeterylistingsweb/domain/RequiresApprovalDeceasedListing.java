@@ -41,7 +41,7 @@ public class RequiresApprovalDeceasedListing implements Serializable{
     String lastKnownContactNumber;
     Long cemeteryID;
     //can't have a member approved, since it requires approval, and once it has been approved the data is moved over to the main table
-    Long memberSubmitID;
+    Long subscriberSubmitID;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name="Other_names")
     List<PersonOtherNames> names;
@@ -62,7 +62,7 @@ public class RequiresApprovalDeceasedListing implements Serializable{
        this.lastKnownContactNumber = aThis.lastKnownContactNumber;
        this.surname = aThis.surname;
        this.maidenName = aThis.maidenName;
-       this.memberSubmitID = aThis.memberSubmitID;
+       this.subscriberSubmitID = aThis.subscriberSubmitID;
     }
     
      private RequiresApprovalDeceasedListing(RequiresApprovalDeceasedListing aThis) {
@@ -79,7 +79,7 @@ public class RequiresApprovalDeceasedListing implements Serializable{
        this.lastKnownContactNumber = aThis.lastKnownContactNumber;
        this.surname = aThis.surname;
        this.maidenName = aThis.maidenName;
-       this.memberSubmitID = aThis.memberSubmitID;
+       this.subscriberSubmitID = aThis.subscriberSubmitID;
        this.names = aThis.names;
     } 
 
@@ -135,8 +135,8 @@ public class RequiresApprovalDeceasedListing implements Serializable{
         return cemeteryID;
     }
 
-    public Long getMemberSubmitID() {
-        return memberSubmitID;
+    public Long getSubscriberSubmitID() {
+        return subscriberSubmitID;
     }
 
     public List<PersonOtherNames> getNames() {
@@ -157,7 +157,7 @@ public class RequiresApprovalDeceasedListing implements Serializable{
         String lastKnownContactName;
         String lastKnownContactNumber;
         Long cemeteryID;
-        Long memberSubmitID;
+        Long subscriberSubmitID;
         List<PersonOtherNames> names;
 
         public Builder setPublishedListingID(Long RequiresApprovalDeceasedListingID) {
@@ -225,8 +225,8 @@ public class RequiresApprovalDeceasedListing implements Serializable{
             return this;
         }
 
-        public Builder setMemberSubmitID(Long memeberSubmitID) {
-            this.memberSubmitID = memeberSubmitID;
+        public Builder setSubscriberSubmitID(Long subscriberSubmitID) {
+            this.subscriberSubmitID = subscriberSubmitID;
             return this;
         }
 

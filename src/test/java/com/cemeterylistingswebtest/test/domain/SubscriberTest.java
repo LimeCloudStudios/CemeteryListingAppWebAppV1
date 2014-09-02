@@ -36,7 +36,7 @@ public class SubscriberTest {
     // TODO add test methods here.
     // The methods must be annotated with annotation @Test. For example:
     //
-    private static Long id;
+    private static Long id, userRoleID;
     public static ApplicationContext ctx;
     public static SubscriberRepository repo;
     public static UserRoleRepository userRepo;
@@ -51,7 +51,6 @@ public class SubscriberTest {
          userRepo = ctx.getBean(UserRoleRepository.class);
          
           Calendar calendar = Calendar.getInstance();
-          // set Date portion to January 1, 1970
           calendar.set(Calendar.YEAR, 2008);
           calendar.set(Calendar.MONTH, Calendar.FEBRUARY);
           calendar.set(Calendar.DATE, 4);
@@ -69,6 +68,7 @@ public class SubscriberTest {
                  .build();
          
          userRepo.save(user);
+         userRoleID = user.getUserRoleID();
          
          Subscriber newSub = new Subscriber.Builder()
                 .setEmail("manfredOsulivan@horseRaddish.com")
@@ -120,20 +120,26 @@ public class SubscriberTest {
                  .setEmail(oldSub.getEmail())
                  .setFirstName(oldSub.getFirstName())
                  .setPwd("drowning")
-                 .setSubscriberID(oldSub.getSubscriberID())
                  .setUserRoleID(oldSub.getUserRoleID())
+                 .setSubscriptionDate(oldSub.getSubscriptionDate())
                  .setUsername(oldSub.getUsername())
                  .build();
          
         repo.delete(repo.findOne(id));
         repo.save(update);
         id = update.getSubscriberID();
+        //userRoleID = update.getUserRoleID().getUserRoleID();
      }
      
      @Test(dependsOnMethods="update")
      public void delete(){
-         repo = ctx.getBean(SubscriberRepository.class);         
+         repo = ctx.getBean(SubscriberRepository.class); 
+         userRepo = ctx.getBean(UserRoleRepository.class);
+         
+         //userRepo.delete(userRepo.findOne(userRoleID)); //cant delete this here because it is deleted in the update, so do we add it somehow in the update, need to take a break though
          repo.delete(repo.findOne(id));
+         
+         
      }
 
     @BeforeClass
