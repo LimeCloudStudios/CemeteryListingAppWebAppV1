@@ -170,8 +170,8 @@ public class RequiresApprovalDeceasedListing implements Serializable{
             return this;
         }
 
-        public Builder setLastName(String lastName) {
-            this.surname = lastName;
+        public Builder setSurname(String surname) {
+            this.surname = surname;
             return this;
         }
 

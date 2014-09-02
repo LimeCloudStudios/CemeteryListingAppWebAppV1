@@ -48,6 +48,10 @@ public class PersonOtherNames implements Serializable {
         return names;
     }
     
+    public Long getPublishedListingID(){
+        return publishedListingID;
+    }
+    
     public static class Builder{
         private Long id;
         private String names;

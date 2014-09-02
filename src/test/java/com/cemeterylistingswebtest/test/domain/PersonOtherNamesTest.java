@@ -6,11 +6,15 @@
 
 package com.cemeterylistingswebtest.test.domain;
 
+import com.cemeterylistingsweb.domain.PersonOtherNames;
+import com.cemeterylistingsweb.domain.PublishedDeceasedListing;
 import com.cemeterylistingsweb.repository.PersonOtherNamesRepository;
+import com.cemeterylistingsweb.repository.PublishedDeceasedListingRepository;
 import com.cemeterylistingswebtest.test.ConnectionConfigTest;
 import static com.cemeterylistingswebtest.test.domain.UserRoleTest.ctx;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.testng.Assert;
 import static org.testng.Assert.*;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
@@ -31,29 +35,82 @@ public class PersonOtherNamesTest {
     // The methods must be annotated with annotation @Test. For example:
     //
     
-    private static Long id;
+    private static Long id, idN1, idN2;
     public static ApplicationContext ctx;
-    public static PersonOtherNamesRepository repo;
+    public static PersonOtherNamesRepository repoNames;
+    public static PublishedDeceasedListingRepository repoListing;
     
      @Test
      public void create() {
          System.out.println("here");
-         repo = ctx.getBean(PersonOtherNamesRepository.class);
+         
+         repoNames = ctx.getBean(PersonOtherNamesRepository.class);         
+         repoListing = ctx.getBean(PublishedDeceasedListingRepository.class);
+         
+         //create published listing object
+         PublishedDeceasedListing newListing = new PublishedDeceasedListing.Builder()
+                 .setFirstName("John")
+                 .build();
+         
+         repoListing.save(newListing);
+         id = newListing.getPublishedListingID();
+         //create other names for the listing object
+         PersonOtherNames newNames1 = new PersonOtherNames.Builder()
+                 .setNames("Samual")
+                 .setPublishedListingID(id)
+                 .build();    
+         
+         PersonOtherNames newNames2 = new PersonOtherNames.Builder()
+                 .setNames("Phillips")
+                 .setPublishedListingID(id)
+                 .build();  
+         
+        repoNames.save(newNames1);   
+        repoNames.save(newNames2); 
+        
+        idN1 = newNames1.getId();
+        idN2 = newNames2.getId();
      }
     
     @Test(dependsOnMethods="create")
      public void read(){
+         repoNames = ctx.getBean(PersonOtherNamesRepository.class);         
+         //repoListing = ctx.getBean(PublishedDeceasedListingRepository.class);
          
+         Assert.assertEquals(repoNames.findOne(idN1).getNames(), "Samual");
+         Assert.assertEquals(repoNames.findOne(idN2).getNames(), "Phillips");
      }
      
      @Test(dependsOnMethods="read")
      public void update(){
+         repoNames = ctx.getBean(PersonOtherNamesRepository.class);         
+         
+         PersonOtherNames oldNames1 = repoNames.findOne(idN1);
+         PersonOtherNames oldNames2 = repoNames.findOne(idN2);
+         
+         PersonOtherNames updateN1 = new PersonOtherNames.Builder()
+                 .setPublishedListingID(oldNames1.getPublishedListingID())
+                 .setNames("Sam")
+                 .build();
+         
+         repoNames.delete(oldNames1.getPublishedListingID());
+         repoNames.save(updateN1);         
+         
+         idN1 = updateN1.getId();
+         
+         Assert.assertEquals(repoNames.findOne(idN1).getNames(), "Sam");
+         Assert.assertEquals(repoNames.findOne(idN2).getNames(), "Phillips");
          
      }
      
      @Test(dependsOnMethods="update")
      public void delete(){
+         repoNames = ctx.getBean(PersonOtherNamesRepository.class);      
+         repoListing = ctx.getBean(PublishedDeceasedListingRepository.class);
          
+         repoNames.delete(idN1);
+         repoNames.delete(idN2);
+         repoListing.delete(id);
      }
 
     @BeforeClass
@@ -71,5 +128,6 @@ public class PersonOtherNamesTest {
 
     @AfterMethod
     public void tearDownMethod() throws Exception {
+        
     }
 }
