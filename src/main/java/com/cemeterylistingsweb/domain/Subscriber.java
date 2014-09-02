@@ -9,12 +9,15 @@ package com.cemeterylistingsweb.domain;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import org.hibernate.annotations.Cascade;
 
 /**
  *
@@ -32,7 +35,7 @@ public class Subscriber implements Serializable{
     String firstName;
     String surname;
     java.sql.Date lastContributionYear;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name="userRole")
     UserRole userRoleID;
     java.sql.Date subscriptionDate;
@@ -170,6 +173,20 @@ public class Subscriber implements Serializable{
         
         public Subscriber build(){
             return new Subscriber(this);
+        }
+
+        public Builder Subscriber(Subscriber aThis) {
+            this.subscriberID = aThis.subscriberID;
+            this.email = aThis.email;
+            this.firstName = aThis.firstName;
+            this.lastContributionYear = aThis.lastContributionYear;
+            this.pwd = aThis.pwd;
+            this.surname = aThis.surname;
+            this.username = aThis.username;
+            this.userRoleID = aThis.userRoleID;
+            this.validUntil = aThis.validUntil;
+            this.subscriptionDate = aThis.subscriptionDate;
+        return this;
         }
     }
 

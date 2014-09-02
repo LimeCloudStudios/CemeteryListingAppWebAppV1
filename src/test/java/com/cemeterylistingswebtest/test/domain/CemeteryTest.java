@@ -6,6 +6,8 @@
 
 package com.cemeterylistingswebtest.test.domain;
 
+import com.cemeterylistingsweb.domain.Cemetery;
+import com.cemeterylistingsweb.domain.Location;
 import com.cemeterylistingsweb.repository.CemeteryRepository;
 import com.cemeterylistingswebtest.test.ConnectionConfigTest;
 import org.springframework.context.ApplicationContext;
@@ -38,7 +40,23 @@ public class CemeteryTest {
      public void create() {
         System.out.println("here");
          repo = ctx.getBean(CemeteryRepository.class);
+         
+         Location local = new Location.Builder()
+                 .setCemeteryName("Palm Springs")
+                 .setCountry("America")
+                 .setDistrict_state("Washington")
+                 .setLocationOfCemetery("12.06.12:45.63.89")
+                 .setProvince_State("New Jersey")
+                 .setTown("Marlboro")
+                 .build();
+         
+         Cemetery newCemetery = new Cemetery.Builder()
+                 .setContactName("Palm Springs")
+                 .setContactNumber("0215698412")
+                 .setLocation(local)
+                 .build();
      
+                 repo.save(newCemetery);
      }
      
      @Test(dependsOnMethods="create")

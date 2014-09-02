@@ -6,14 +6,14 @@
 
 package com.cemeterylistingsweb.domain;
 
+import com.cemeterylistingsweb.domain.Location;
 import java.io.Serializable;
 import java.util.Objects;
-import javax.persistence.CascadeType;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
 /**
@@ -26,30 +26,34 @@ public class Cemetery implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
-    String locationID;
+    @Embedded
+    Location location;
     String contactName;
     String contactNumber;
+
+    public Cemetery() {
+    }
 
     private Cemetery(Builder aThis) {
        this.contactName = aThis.contactName;
        this.contactNumber = aThis.contactNumber;
        this.id = aThis.id;
-       this.locationID = aThis.locationID;
+       this.location = aThis.location;
     }
     
     private Cemetery(Cemetery aThis) {
        this.contactName = aThis.contactName;
        this.contactNumber = aThis.contactNumber;
        this.id = aThis.id;
-       this.locationID = aThis.locationID;
+       this.location = aThis.location;
     }
 
     public Long getId() {
         return id;
     }
 
-    public String getLocationID() {
-        return locationID;
+    public Location getLocationID() {
+        return location;
     }
 
     public String getContactName() {
@@ -62,7 +66,7 @@ public class Cemetery implements Serializable{
     
     public static class Builder{
         Long id;
-        String locationID;
+        Location location;
         String contactName;
         String contactNumber;
 
@@ -71,8 +75,8 @@ public class Cemetery implements Serializable{
             return this;
         }
 
-        public Builder setLocationID(String locationID) {
-            this.locationID = locationID;
+        public Builder setLocation(Location location) {
+            this.location = location;
             return this;
         }
 

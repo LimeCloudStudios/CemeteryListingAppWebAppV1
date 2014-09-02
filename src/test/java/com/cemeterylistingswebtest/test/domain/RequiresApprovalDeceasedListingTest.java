@@ -62,8 +62,8 @@ public class RequiresApprovalDeceasedListingTest {
          UserRole userRole = new UserRole.Builder()
                  .setLevel(1)
                  .build();
-         userRepo.save(userRole);
-         userRoleID = userRole.getUserRoleID();
+         //userRepo.save(userRole);
+         //userRoleID = userRole.getUserRoleID();
          
          //Initialise subscriber
          Subscriber newSub = new Subscriber.Builder()

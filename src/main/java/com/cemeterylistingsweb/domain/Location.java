@@ -19,10 +19,10 @@ import javax.persistence.Id;
  */
 @Embeddable
 public class Location implements Serializable{
-    private static final long serialVersionUID = 1L;
+    /*private static final long serialVersionUID = 1L;
     @Id // deaulft
     @GeneratedValue(strategy = GenerationType.AUTO)
-    Long locationID;
+    Long id;*/
     String country;
     String province_State;
     String district_state;
@@ -34,7 +34,7 @@ public class Location implements Serializable{
         this.cemeteryName = aThis.cemeteryName;
         this.country = aThis.country;
         this.district_state = aThis.district_state;
-        this.locationID = aThis.locationID;
+        //this.id = aThis.locationID;
         this.locationOfCemetery = aThis.locationOfCemetery;
         this.province_State = aThis.province_State;
         this.town = aThis.town;
@@ -44,7 +44,7 @@ public class Location implements Serializable{
         this.cemeteryName = aThis.cemeteryName;
         this.country = aThis.country;
         this.district_state = aThis.district_state;
-        this.locationID = aThis.locationID;
+        //this.id = aThis.id;
         this.locationOfCemetery = aThis.locationOfCemetery;
         this.province_State = aThis.province_State;
         this.town = aThis.town;
@@ -52,9 +52,9 @@ public class Location implements Serializable{
     
     public Location(){};
 
-    public Long getLocationID() {
-        return locationID;
-    }
+    /*public Long getLocationID() {
+        return id;
+    }*/
 
     public String getCountry() {
         return country;
@@ -128,28 +128,6 @@ public class Location implements Serializable{
             return new Location(this);
         }
     
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 5;
-        hash = 43 * hash + Objects.hashCode(this.locationID);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Location other = (Location) obj;
-        if (!Objects.equals(this.locationID, other.locationID)) {
-            return false;
-        }
-        return true;
     }
     
     

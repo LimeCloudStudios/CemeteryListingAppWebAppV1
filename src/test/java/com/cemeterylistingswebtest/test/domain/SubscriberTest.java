@@ -67,8 +67,8 @@ public class SubscriberTest {
                  .setLevel(1)
                  .build();
          
-         userRepo.save(user);
-         userRoleID = user.getUserRoleID();
+         //userRepo.save(user);
+         //userRoleID = user.getUserRoleID();
          
          Subscriber newSub = new Subscriber.Builder()
                 .setEmail("manfredOsulivan@horseRaddish.com")
@@ -116,16 +116,12 @@ public class SubscriberTest {
          repo = ctx.getBean(SubscriberRepository.class);
          
          Subscriber oldSub = repo.findOne(id);
+         
          Subscriber update = new Subscriber.Builder()
-                 .setEmail(oldSub.getEmail())
-                 .setFirstName(oldSub.getFirstName())
-                 .setPwd("drowning")
-                 .setUserRoleID(oldSub.getUserRoleID())
-                 .setSubscriptionDate(oldSub.getSubscriptionDate())
-                 .setUsername(oldSub.getUsername())
+                 .Subscriber(oldSub)
                  .build();
          
-        repo.delete(repo.findOne(id));
+        //repo.delete(repo.findOne(id));
         repo.save(update);
         id = update.getSubscriberID();
         //userRoleID = update.getUserRoleID().getUserRoleID();
