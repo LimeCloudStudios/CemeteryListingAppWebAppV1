@@ -26,7 +26,7 @@ public class Subscriber implements Serializable{
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    Long memberID;
+    Long subscriberID;
     String username;
     String email;
     String pwd;
@@ -42,7 +42,7 @@ public class Subscriber implements Serializable{
     public Subscriber(){}
 
     private Subscriber(Builder aThis) {
-        this.memberID = aThis.memberID;
+        this.subscriberID = aThis.subscriberID;
         this.email = aThis.email;
         this.firstName = aThis.firstName;
         this.lastContributionYear = aThis.lastContributionYear;
@@ -55,7 +55,7 @@ public class Subscriber implements Serializable{
     }
     
     private Subscriber(Subscriber aThis) {
-        this.memberID = aThis.memberID;
+        this.subscriberID = aThis.subscriberID;
         this.email = aThis.email;
         this.firstName = aThis.firstName;
         this.lastContributionYear = aThis.lastContributionYear;
@@ -67,8 +67,8 @@ public class Subscriber implements Serializable{
         this.subscriptionDate = aThis.subscriptionDate;
     }
 
-    public Long getMemberID() {
-        return memberID;
+    public Long getSubscriberID() {
+        return subscriberID;
     }
 
     public String getUsername() {
@@ -108,7 +108,7 @@ public class Subscriber implements Serializable{
     }
         
     public static class Builder{
-        Long memberID;
+        Long subscriberID;
         String username;
         String email;
         String pwd;
@@ -119,8 +119,8 @@ public class Subscriber implements Serializable{
         java.sql.Date subscriptionDate;
         String validUntil;
 
-        public Builder setMemberID(Long MemberID) {
-            this.memberID = MemberID;
+        public Builder setSubscriberID(Long subscriberID) {
+            this.subscriberID = subscriberID;
             return this;
         }
 
@@ -177,7 +177,7 @@ public class Subscriber implements Serializable{
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 37 * hash + Objects.hashCode(this.memberID);
+        hash = 37 * hash + Objects.hashCode(this.subscriberID);
         return hash;
     }
 
@@ -190,7 +190,7 @@ public class Subscriber implements Serializable{
             return false;
         }
         final Subscriber other = (Subscriber) obj;
-        if (!Objects.equals(this.memberID, other.memberID)) {
+        if (!Objects.equals(this.subscriberID, other.subscriberID)) {
             return false;
         }
         return true;

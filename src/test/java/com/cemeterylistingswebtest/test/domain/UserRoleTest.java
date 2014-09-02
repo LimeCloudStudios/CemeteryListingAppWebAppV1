@@ -6,9 +6,11 @@
 
 package com.cemeterylistingswebtest.test.domain;
 
+import com.cemeterylistingsweb.domain.UserRole;
 import com.cemeterylistingsweb.repository.UserRoleRepository;
 import com.cemeterylistingswebtest.test.ConnectionConfigTest;
 import static com.cemeterylistingswebtest.test.domain.CemeteryTest.ctx;
+import org.junit.Assert;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import static org.testng.Assert.*;
@@ -39,20 +41,43 @@ public class UserRoleTest {
      public void create() {
           System.out.println("here");
          repo = ctx.getBean(UserRoleRepository.class);
+         
+         UserRole newRole = new UserRole.Builder()
+                 .setLevel(1)
+                 .build();
+         
+         repo.save(newRole);
+         id = newRole.getUserRoleID();
      }
      
      @Test(dependsOnMethods="create")
      public void read(){
+         repo = ctx.getBean(UserRoleRepository.class);
+         Assert.assertEquals(repo.findOne(id).getLevel(), 1);
          
      }
      
      @Test(dependsOnMethods="read")
      public void update(){
+         repo = ctx.getBean(UserRoleRepository.class);
+         UserRole oldRole = repo.findOne(id);
+         UserRole newRole = new UserRole.Builder()
+                 .setLevel(2)
+                 .build();
+         
+         repo.delete(repo.findOne(id));         
+         repo.save(newRole);         
+         id = newRole.getUserRoleID();
+         
+         
          
      }
      
      @Test(dependsOnMethods="update")
      public void delete(){
+         repo = ctx.getBean(UserRoleRepository.class);
+         
+         repo.delete(repo.findOne(id));
          
      }
      

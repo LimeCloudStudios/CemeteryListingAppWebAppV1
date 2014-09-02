@@ -51,18 +51,17 @@ public class SubscriberTest {
          userRepo = ctx.getBean(UserRoleRepository.class);
          
           Calendar calendar = Calendar.getInstance();
-            // set Date portion to January 1, 1970
-            calendar.set(Calendar.YEAR, 2008);
-            calendar.set(Calendar.MONTH, Calendar.FEBRUARY);
-            calendar.set(Calendar.DATE, 4);
-
-            // normalize the object
-           /* calendar.set(Calendar.HOUR_OF_DAY, 0);
-            calendar.set(Calendar.MINUTE, 0);
-            calendar.set(Calendar.SECOND, 0);
-            calendar.set(Calendar.MILLISECOND, 0);
-            */
-            java.sql.Date javaSqlDate = new java.sql.Date(calendar.getTime().getTime());
+          // set Date portion to January 1, 1970
+          calendar.set(Calendar.YEAR, 2008);
+          calendar.set(Calendar.MONTH, Calendar.FEBRUARY);
+          calendar.set(Calendar.DATE, 4);
+        
+          /* calendar.set(Calendar.HOUR_OF_DAY, 0);
+          calendar.set(Calendar.MINUTE, 0);
+          calendar.set(Calendar.SECOND, 0);
+          calendar.set(Calendar.MILLISECOND, 0);
+          */
+          java.sql.Date javaSqlDate = new java.sql.Date(calendar.getTime().getTime());
          
                  
          UserRole user = new UserRole.Builder()
@@ -71,25 +70,25 @@ public class SubscriberTest {
          
          userRepo.save(user);
          
-            Subscriber newSub = new Subscriber.Builder()
-                    .setEmail("manfredOsulivan@horseRaddish.com")
-                    .setFirstName("Manfred")
-                    .setSurname("Osulivan")
-                    .setPwd("jesus")
-                    .setUsername("ManiFredOssy")
-                    .setSubscriptionDate(javaSqlDate)
-                    .setUserRoleID(user)
-                    .build();
+         Subscriber newSub = new Subscriber.Builder()
+                .setEmail("manfredOsulivan@horseRaddish.com")
+                .setFirstName("Manfred")
+                .setSurname("Osulivan")
+                .setPwd("jesus")
+                .setUsername("ManiFredOssy")
+                .setSubscriptionDate(javaSqlDate)
+                .setUserRoleID(user)
+                .build();
             
          
          repo.save(newSub);
-         id = newSub.getMemberID();
+         id = newSub.getSubscriberID();
      }
      
      @Test(dependsOnMethods="create")
      public void read(){  
          repo = ctx.getBean(SubscriberRepository.class);         
-         Assert.assertNotNull(repo.findOne(id).getMemberID());
+         Assert.assertNotNull(repo.findOne(id).getSubscriberID());
          
      }
      
@@ -121,22 +120,20 @@ public class SubscriberTest {
                  .setEmail(oldSub.getEmail())
                  .setFirstName(oldSub.getFirstName())
                  .setPwd("drowning")
-                 .setMemberID(oldSub.getMemberID())
+                 .setSubscriberID(oldSub.getSubscriberID())
                  .setUserRoleID(oldSub.getUserRoleID())
                  .setUsername(oldSub.getUsername())
                  .build();
          
-        //repo.delete(id);
+        repo.delete(repo.findOne(id));
         repo.save(update);
-                 
+        id = update.getSubscriberID();
      }
      
      @Test(dependsOnMethods="update")
      public void delete(){
-         repo = ctx.getBean(SubscriberRepository.class);
-         
-         Subscriber oldSub = repo.findOne(id);
-         repo.delete(id);
+         repo = ctx.getBean(SubscriberRepository.class);         
+         repo.delete(repo.findOne(id));
      }
 
     @BeforeClass

@@ -100,7 +100,7 @@ public class RequiresApprovalDeceasedListingTest {
                  .build();
          
          repo.save(updateListing);
-         repo.delete(oldListing.getRequiresApprovalDeceasedListingID());
+         repo.delete(repo.findOne(id));
          
          id = updateListing.getRequiresApprovalDeceasedListingID();
      }
@@ -122,7 +122,7 @@ public class RequiresApprovalDeceasedListingTest {
      @Test(dependsOnMethods="readUpdated")
      public void delete(){
          repo = ctx.getBean(RequiresApprovalDeceasedListingRepository.class);
-         repo.delete(id);
+         repo.delete(repo.findOne(id));
      }
 
     @BeforeClass

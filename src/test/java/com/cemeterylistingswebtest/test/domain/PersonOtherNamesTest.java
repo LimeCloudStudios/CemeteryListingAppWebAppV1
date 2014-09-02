@@ -42,7 +42,7 @@ public class PersonOtherNamesTest {
     
      @Test
      public void create() {
-         System.out.println("here");
+         System.out.println("Person Other Names");
          
          repoNames = ctx.getBean(PersonOtherNamesRepository.class);         
          repoListing = ctx.getBean(PublishedDeceasedListingRepository.class);
@@ -93,7 +93,7 @@ public class PersonOtherNamesTest {
                  .setNames("Sam")
                  .build();
          
-         repoNames.delete(oldNames1.getPublishedListingID());
+         repoNames.delete(repoNames.findOne(idN1));
          repoNames.save(updateN1);         
          
          idN1 = updateN1.getId();
@@ -108,9 +108,9 @@ public class PersonOtherNamesTest {
          repoNames = ctx.getBean(PersonOtherNamesRepository.class);      
          repoListing = ctx.getBean(PublishedDeceasedListingRepository.class);
          
-         repoNames.delete(idN1);
-         repoNames.delete(idN2);
-         repoListing.delete(id);
+         repoNames.delete(repoNames.findOne(idN1));
+         repoNames.delete(repoNames.findOne(idN2));
+         repoListing.delete(repoListing.findOne(id));
      }
 
     @BeforeClass

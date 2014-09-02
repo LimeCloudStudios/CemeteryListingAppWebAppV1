@@ -70,8 +70,8 @@ public class PublishedDeceasedListingTest {
                  .setLastKnownContactName("Berry")
                  .setLastKnownContactNumber("0725576482")
                  //cemetery id
-                 //memberApprovedID
-                 //member submitted id
+                 //subscriberApprovedID
+                 //subscriber submitted id
                  //names
                  
                  .build();
@@ -116,7 +116,7 @@ public class PublishedDeceasedListingTest {
                  .build();
          
          repo.save(updateListing);
-         repo.delete(oldListing.getPublishedListingID());
+         repo.delete(repo.findOne(id));
          
          id = updateListing.getPublishedListingID();
          
