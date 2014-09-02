@@ -33,14 +33,15 @@ public class RequiresApprovalDeceasedListing implements Serializable{
     String maidenName;
     String gender;
     String dateOfBirth;
+    String dateOfDeath;
     String graveInscription;
     String graveNumber;
     String imageOfBurialSite; // will need to be done in binary or saved in a online directory 
     String lastKnownContactName;
     String lastKnownContactNumber;
     Long cemeteryID;
-    Long memeberApprovedID;
-    Long memeberSubmitID;
+    //can't have a member approved, since it requires approval, and once it has been approved the data is moved over to the main table
+    Long memberSubmitID;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name="Other_names")
     List<PersonOtherNames> names;
@@ -51,6 +52,7 @@ public class RequiresApprovalDeceasedListing implements Serializable{
        this.RequiresApprovalDeceasedListingID = aThis.RequiresApprovalDeceasedListingID;
        this.cemeteryID = aThis.cemeteryID;
        this.dateOfBirth = aThis.dateOfBirth;
+       this.dateOfDeath = aThis.dateOfDeath;
        this.firstName = aThis.firstName;
        this.gender = aThis.gender;
        this.graveInscription = aThis.graveInscription;
@@ -60,14 +62,14 @@ public class RequiresApprovalDeceasedListing implements Serializable{
        this.lastKnownContactNumber = aThis.lastKnownContactNumber;
        this.surname = aThis.surname;
        this.maidenName = aThis.maidenName;
-       this.memeberApprovedID = aThis.memeberApprovedID;
-       this.memeberSubmitID = aThis.memeberSubmitID;
+       this.memberSubmitID = aThis.memberSubmitID;
     }
     
      private RequiresApprovalDeceasedListing(RequiresApprovalDeceasedListing aThis) {
        this.RequiresApprovalDeceasedListingID = aThis.RequiresApprovalDeceasedListingID;
        this.cemeteryID = aThis.cemeteryID;
        this.dateOfBirth = aThis.dateOfBirth;
+       this.dateOfDeath = aThis.dateOfDeath;
        this.firstName = aThis.firstName;
        this.gender = aThis.gender;
        this.graveInscription = aThis.graveInscription;
@@ -77,8 +79,7 @@ public class RequiresApprovalDeceasedListing implements Serializable{
        this.lastKnownContactNumber = aThis.lastKnownContactNumber;
        this.surname = aThis.surname;
        this.maidenName = aThis.maidenName;
-       this.memeberApprovedID = aThis.memeberApprovedID;
-       this.memeberSubmitID = aThis.memeberSubmitID;
+       this.memberSubmitID = aThis.memberSubmitID;
        this.names = aThis.names;
     } 
 
@@ -105,6 +106,10 @@ public class RequiresApprovalDeceasedListing implements Serializable{
     public String getDateOfBirth() {
         return dateOfBirth;
     }
+    
+    public String getDateOfDeath() {
+        return dateOfDeath;
+    }
 
     public String getGraveInscription() {
         return graveInscription;
@@ -130,12 +135,8 @@ public class RequiresApprovalDeceasedListing implements Serializable{
         return cemeteryID;
     }
 
-    public Long getMemeberApprovedID() {
-        return memeberApprovedID;
-    }
-
-    public Long getMemeberSubmitID() {
-        return memeberSubmitID;
+    public Long getMemberSubmitID() {
+        return memberSubmitID;
     }
 
     public List<PersonOtherNames> getNames() {
@@ -148,15 +149,15 @@ public class RequiresApprovalDeceasedListing implements Serializable{
         String surname;
         String maidenName;
         String gender;
-        String dateOfBirth;
+        String dateOfBirth;        
+        String dateOfDeath;
         String graveInscription;
         String graveNumber;
         String imageOfBurialSite; // will need to be done in binary or saved in a online directory 
         String lastKnownContactName;
         String lastKnownContactNumber;
         Long cemeteryID;
-        Long memeberApprovedID;
-        Long memeberSubmitID;
+        Long memberSubmitID;
         List<PersonOtherNames> names;
 
         public Builder setPublishedListingID(Long RequiresApprovalDeceasedListingID) {
@@ -186,6 +187,11 @@ public class RequiresApprovalDeceasedListing implements Serializable{
 
         public Builder setDateOfBirth(String dateOfBirth) {
             this.dateOfBirth = dateOfBirth;
+            return this;
+        }
+        
+        public Builder setDateOfDeath(String dateOfDeath) {
+            this.dateOfDeath = dateOfDeath;
             return this;
         }
 
@@ -219,20 +225,14 @@ public class RequiresApprovalDeceasedListing implements Serializable{
             return this;
         }
 
-        public Builder setMemeberApprovedID(Long memeberApprovedID) {
-            this.memeberApprovedID = memeberApprovedID;
-            return this;
-        }
-
-        public Builder setMemeberSubmitID(Long memeberSubmitID) {
-            this.memeberSubmitID = memeberSubmitID;
+        public Builder setMemberSubmitID(Long memeberSubmitID) {
+            this.memberSubmitID = memeberSubmitID;
             return this;
         }
 
         public void setNames(List<PersonOtherNames> names) {
             this.names = names;
-        }
-        
+        }       
         
         
         public RequiresApprovalDeceasedListing build(){
