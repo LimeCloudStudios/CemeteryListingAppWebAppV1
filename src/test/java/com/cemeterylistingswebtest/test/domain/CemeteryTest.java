@@ -79,15 +79,39 @@ public class CemeteryTest {
      @Test(dependsOnMethods="read")
      public void update(){
          repo = ctx.getBean(CemeteryRepository.class);
+         Cemetery oldCemetery = repo.findOne(id);
+         Cemetery updateCemetery = new Cemetery.Builder()
+                 .setContactName(oldCemetery.getContactName())
+                 .setContactNumber("0215554412")
+                 .setLocation(oldCemetery.getLocationID())
+                 .build();
          
-         
+         repo.delete(repo.findOne(id));
+         repo.save(updateCemetery);
+         id = updateCemetery.getId();
      }
      
-     @Test(dependsOnMethods="update")
+      @Test(dependsOnMethods="update")
+     public void readUpdated(){
+         repo = ctx.getBean(CemeteryRepository.class);
+         Assert.assertEquals(repo.findOne(id).getContactName(), "Palm Springs");
+         Assert.assertEquals(repo.findOne(id).getContactNumber(), "0215554412");
+         
+         
+         Assert.assertEquals(repo.findOne(id).getLocationID().getCemeteryName(), "Palm Springs");
+         Assert.assertEquals(repo.findOne(id).getLocationID().getCountry(), "America");
+         Assert.assertEquals(repo.findOne(id).getLocationID().getDistrict_state(), "Washington");
+         Assert.assertEquals(repo.findOne(id).getLocationID().getLocationOfCemetery(), "12.06.12:45.63.89");
+         Assert.assertEquals(repo.findOne(id).getLocationID().getProvince_State(), "New Jersey");
+         Assert.assertEquals(repo.findOne(id).getLocationID().getTown(), "Marlboro");
+     }
+     
+     
+     
+     @Test(dependsOnMethods="readUpdated")
      public void delete(){
          repo = ctx.getBean(CemeteryRepository.class);
-         
-         
+         repo.delete(repo.findOne(id));         
      }
 
     @BeforeClass
