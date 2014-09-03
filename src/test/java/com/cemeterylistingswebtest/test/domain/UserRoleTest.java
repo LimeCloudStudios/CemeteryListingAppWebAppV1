@@ -39,7 +39,7 @@ public class UserRoleTest {
     
      @Test
      public void create() {
-          System.out.println("here");
+          System.out.println("User Role Test");
          repo = ctx.getBean(UserRoleRepository.class);
          
          UserRole newRole = new UserRole.Builder()
@@ -76,10 +76,8 @@ public class UserRoleTest {
      
      @Test(dependsOnMethods="update")
      public void delete(){
-         repo = ctx.getBean(UserRoleRepository.class);
-         
-         repo.delete(repo.findOne(id));
-         
+         repo = ctx.getBean(UserRoleRepository.class);         
+         repo.delete(repo.findOne(id));         
      }
      
 

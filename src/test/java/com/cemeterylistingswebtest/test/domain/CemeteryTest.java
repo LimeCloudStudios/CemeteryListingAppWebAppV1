@@ -12,6 +12,7 @@ import com.cemeterylistingsweb.repository.CemeteryRepository;
 import com.cemeterylistingswebtest.test.ConnectionConfigTest;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.testng.Assert;
 import static org.testng.Assert.*;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
@@ -38,7 +39,7 @@ public class CemeteryTest {
     
      @Test
      public void create() {
-        System.out.println("here");
+        System.out.println("Cemetery Testing");
          repo = ctx.getBean(CemeteryRepository.class);
          
          Location local = new Location.Builder()
@@ -56,22 +57,61 @@ public class CemeteryTest {
                  .setLocation(local)
                  .build();
      
-                 repo.save(newCemetery);
+        repo.save(newCemetery);
+        id = newCemetery.getId();
      }
      
      @Test(dependsOnMethods="create")
      public void read(){
+         repo = ctx.getBean(CemeteryRepository.class);
+         Assert.assertEquals(repo.findOne(id).getContactName(), "Palm Springs");
+         Assert.assertEquals(repo.findOne(id).getContactNumber(), "0215698412");
          
+         
+         Assert.assertEquals(repo.findOne(id).getLocationID().getCemeteryName(), "Palm Springs");
+         Assert.assertEquals(repo.findOne(id).getLocationID().getCountry(), "America");
+         Assert.assertEquals(repo.findOne(id).getLocationID().getDistrict_state(), "Washington");
+         Assert.assertEquals(repo.findOne(id).getLocationID().getLocationOfCemetery(), "12.06.12:45.63.89");
+         Assert.assertEquals(repo.findOne(id).getLocationID().getProvince_State(), "New Jersey");
+         Assert.assertEquals(repo.findOne(id).getLocationID().getTown(), "Marlboro");
      }
      
      @Test(dependsOnMethods="read")
      public void update(){
+         repo = ctx.getBean(CemeteryRepository.class);
+         Cemetery oldCemetery = repo.findOne(id);
+         Cemetery updateCemetery = new Cemetery.Builder()
+                 .setContactName(oldCemetery.getContactName())
+                 .setContactNumber("0215554412")
+                 .setLocation(oldCemetery.getLocationID())
+                 .build();
          
+         repo.delete(repo.findOne(id));
+         repo.save(updateCemetery);
+         id = updateCemetery.getId();
      }
      
-     @Test(dependsOnMethods="update")
-     public void delete(){
+      @Test(dependsOnMethods="update")
+     public void readUpdated(){
+         repo = ctx.getBean(CemeteryRepository.class);
+         Assert.assertEquals(repo.findOne(id).getContactName(), "Palm Springs");
+         Assert.assertEquals(repo.findOne(id).getContactNumber(), "0215554412");
          
+         
+         Assert.assertEquals(repo.findOne(id).getLocationID().getCemeteryName(), "Palm Springs");
+         Assert.assertEquals(repo.findOne(id).getLocationID().getCountry(), "America");
+         Assert.assertEquals(repo.findOne(id).getLocationID().getDistrict_state(), "Washington");
+         Assert.assertEquals(repo.findOne(id).getLocationID().getLocationOfCemetery(), "12.06.12:45.63.89");
+         Assert.assertEquals(repo.findOne(id).getLocationID().getProvince_State(), "New Jersey");
+         Assert.assertEquals(repo.findOne(id).getLocationID().getTown(), "Marlboro");
+     }
+     
+     
+     
+     @Test(dependsOnMethods="readUpdated")
+     public void delete(){
+         repo = ctx.getBean(CemeteryRepository.class);
+         repo.delete(repo.findOne(id));         
      }
 
     @BeforeClass
@@ -90,4 +130,5 @@ public class CemeteryTest {
     @AfterMethod
     public void tearDownMethod() throws Exception {
     }
+    
 }
