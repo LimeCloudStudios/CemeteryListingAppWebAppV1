@@ -36,7 +36,7 @@ public class PublishedDeceasedListingTest {
     //
      @Test
      public void create() {
-         System.out.println("here");
+         System.out.println("Published Deceased Listings Test");
          repo = ctx.getBean(PublishedDeceasedListingRepository.class);
          /*
             String firstName;

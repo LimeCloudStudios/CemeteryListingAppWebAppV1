@@ -45,7 +45,7 @@ public class SubscriberTest {
     
      @Test
      public void create() {
-         System.out.println("Test Subscriber");
+         System.out.println("Subscriber Test");
          
          repo = ctx.getBean(SubscriberRepository.class);
          userRepo = ctx.getBean(UserRoleRepository.class);

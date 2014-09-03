@@ -45,7 +45,7 @@ public class RequiresApprovalDeceasedListingTest {
     
      @Test
      public void create() {
-          System.out.println("here");
+          System.out.println("Requires Approval Deceased Listing Test");
          repoList = ctx.getBean(RequiresApprovalDeceasedListingRepository.class);
          subRepo = ctx.getBean(SubscriberRepository.class);
          userRepo = ctx.getBean(UserRoleRepository.class);

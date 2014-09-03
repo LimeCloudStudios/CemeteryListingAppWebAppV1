@@ -42,7 +42,7 @@ public class PersonOtherNamesTest {
     
      @Test
      public void create() {
-         System.out.println("Person Other Names");
+         System.out.println("Person Other Names Test");
          
          repoNames = ctx.getBean(PersonOtherNamesRepository.class);         
          repoListing = ctx.getBean(PublishedDeceasedListingRepository.class);
