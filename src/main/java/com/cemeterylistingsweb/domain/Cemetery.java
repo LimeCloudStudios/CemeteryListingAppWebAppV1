@@ -94,6 +94,14 @@ public class Cemetery implements Serializable{
             return new Cemetery(this);
         }
         
+       public Builder Cemetery(Cemetery aThis) {
+        this.contactName = aThis.contactName;
+        this.contactNumber = aThis.contactNumber;
+        this.id = aThis.id;
+        this.location = aThis.location;
+        return this;
+    }
+        
     }
 
     @Override

@@ -253,6 +253,26 @@ public class PublishedDeceasedListing implements Serializable{
             return new PublishedDeceasedListing(this);
         }
         
+    public Builder PublishedDeceasedListing(PublishedDeceasedListing aThis) {
+       this.PublishedListingID = aThis.PublishedListingID;
+       this.cemeteryID = aThis.cemeteryID;
+       this.dateOfBirth = aThis.dateOfBirth;
+       this.dateOfDeath = aThis.dateOfDeath;
+       this.firstName = aThis.firstName;
+       this.gender = aThis.gender;
+       this.graveInscription = aThis.graveInscription;
+       this.graveNumber = aThis.graveNumber;
+       this.imageOfBurialSite = aThis.imageOfBurialSite;
+       this.lastKnownContactName = aThis.lastKnownContactName;
+       this.lastKnownContactNumber = aThis.lastKnownContactNumber;
+       this.surname = aThis.surname;
+       this.maidenName = aThis.maidenName;
+       this.subscriberApprovedID = aThis.subscriberApprovedID;
+       this.subscriberSubmitID = aThis.subscriberSubmitID;
+       this.names = aThis.names;
+       return this;
+    } 
+        
     }
     
      @Override

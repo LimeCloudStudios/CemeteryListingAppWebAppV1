@@ -63,6 +63,12 @@ public class UserRole implements Serializable{
         public UserRole build(){
             return new UserRole(this);
         }
+        
+     public Builder UserRole(UserRole aThis){
+        this.level = aThis.level;
+        this.userRoleID = aThis.userRoleID;
+        return this;
+        }
     }
 
     @Override

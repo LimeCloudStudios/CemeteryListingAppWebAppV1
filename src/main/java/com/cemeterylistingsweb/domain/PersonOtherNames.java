@@ -76,6 +76,13 @@ public class PersonOtherNames implements Serializable {
             return new PersonOtherNames(this);
         }
         
+    public Builder PersonOtherNames(PersonOtherNames aThis) {
+        this.id = aThis.id;
+        this.names = aThis.names;
+        this.publishedListingID = aThis.publishedListingID;
+        return this;
+    }
+        
     }
 
     @Override
