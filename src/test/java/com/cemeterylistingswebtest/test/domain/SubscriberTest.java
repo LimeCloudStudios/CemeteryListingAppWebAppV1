@@ -55,11 +55,6 @@ public class SubscriberTest {
           calendar.set(Calendar.MONTH, Calendar.FEBRUARY);
           calendar.set(Calendar.DATE, 4);
         
-          /* calendar.set(Calendar.HOUR_OF_DAY, 0);
-          calendar.set(Calendar.MINUTE, 0);
-          calendar.set(Calendar.SECOND, 0);
-          calendar.set(Calendar.MILLISECOND, 0);
-          */
           java.sql.Date javaSqlDate = new java.sql.Date(calendar.getTime().getTime());
          
                  
@@ -86,13 +81,23 @@ public class SubscriberTest {
      }
      
      @Test(dependsOnMethods="create")
-     public void read(){  
+     public void readNotNull(){  
          repo = ctx.getBean(SubscriberRepository.class);         
          Assert.assertNotNull(repo.findOne(id).getSubscriberID());
          
      }
+     @Test(dependsOnMethods="readNotNull")
+     public void read(){  
+         repo = ctx.getBean(SubscriberRepository.class);        
+         Assert.assertEquals(repo.findOne(id).getEmail(),"manfredOsulivan@horseRaddish.com");
+         Assert.assertEquals(repo.findOne(id).getFirstName(),"Manfred");
+         Assert.assertEquals(repo.findOne(id).getSurname(),"Osulivan");
+         Assert.assertEquals(repo.findOne(id).getPwd(),"jesus");
+         Assert.assertEquals(repo.findOne(id).getUsername(),"ManiFredOssy");
+     }
      
-     @Test(dependsOnMethods="create")
+     
+     @Test(dependsOnMethods="read")
      public void testDate(){
          Calendar calendar = Calendar.getInstance();
          calendar.set(Calendar.YEAR, 2008);

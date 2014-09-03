@@ -93,7 +93,7 @@ public class RequiresApprovalDeceasedListingTest {
                  .setLastKnownContactNumber("0725576482")
                  .setSubscriberSubmitID(subID)
                  //cemetery id
-                 //subscriber submitted id
+                 
                  //names
                  
                  .build();
