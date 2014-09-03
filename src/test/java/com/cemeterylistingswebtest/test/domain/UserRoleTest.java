@@ -75,10 +75,8 @@ public class UserRoleTest {
      
      @Test(dependsOnMethods="update")
      public void delete(){
-         repo = ctx.getBean(UserRoleRepository.class);
-         
-         repo.delete(repo.findOne(id));
-         
+         repo = ctx.getBean(UserRoleRepository.class);         
+         repo.delete(repo.findOne(id));         
      }
      
 
