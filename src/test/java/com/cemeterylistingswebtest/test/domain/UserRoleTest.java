@@ -60,12 +60,13 @@ public class UserRoleTest {
      @Test(dependsOnMethods="read")
      public void update(){
          repo = ctx.getBean(UserRoleRepository.class);
+         
          UserRole oldRole = repo.findOne(id);
          UserRole newRole = new UserRole.Builder()
+                 .UserRole(oldRole)
                  .setLevel(2)
                  .build();
-         
-         repo.delete(repo.findOne(id));         
+             
          repo.save(newRole);         
          id = newRole.getUserRoleID();
          

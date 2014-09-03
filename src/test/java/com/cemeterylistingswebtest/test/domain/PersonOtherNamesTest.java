@@ -86,20 +86,16 @@ public class PersonOtherNamesTest {
          repoNames = ctx.getBean(PersonOtherNamesRepository.class);         
          
          PersonOtherNames oldNames1 = repoNames.findOne(idN1);
-         PersonOtherNames oldNames2 = repoNames.findOne(idN2);
          
          PersonOtherNames updateN1 = new PersonOtherNames.Builder()
-                 .setPublishedListingID(oldNames1.getPublishedListingID())
+                 .PersonOtherNames(oldNames1)
                  .setNames("Sam")
                  .build();
          
-         repoNames.delete(repoNames.findOne(idN1));
+         
          repoNames.save(updateN1);         
          
          idN1 = updateN1.getId();
-         
-         Assert.assertEquals(repoNames.findOne(idN1).getNames(), "Sam");
-         Assert.assertEquals(repoNames.findOne(idN2).getNames(), "Phillips");
          
      }
      

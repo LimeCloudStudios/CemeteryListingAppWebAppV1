@@ -38,25 +38,7 @@ public class PublishedDeceasedListingTest {
      public void create() {
          System.out.println("here");
          repo = ctx.getBean(PublishedDeceasedListingRepository.class);
-         /*
-            String firstName;
-            String surname;
-            String maidenName;
-            String gender;
-            String dateOfBirth;
-            String dateOfDeath;
-            String graveInscription;
-            String graveNumber;
-            String imageOfBurialSite; // will need to be done in binary or saved in a online directory 
-            String lastKnownContactName;
-            String lastKnownContactNumber;
-            Long cemeteryID;
-            //can't have a member approved, since it requires approval, and once it has been approved the data is moved over to the main table
-            Long memberSubmitID;
-            @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-            @JoinColumn(name="Other_names")
-            List<PersonOtherNames> names;
-         */
+     
          PublishedDeceasedListing newListing = new PublishedDeceasedListing.Builder()
                  .setFirstName("Hendrika")
                  .setSurname("Fourie")
@@ -69,11 +51,6 @@ public class PublishedDeceasedListingTest {
                  .setImageOfBurialSite("/images/001.jpg")
                  .setLastKnownContactName("Berry")
                  .setLastKnownContactNumber("0725576482")
-                 //cemetery id
-                 //subscriberApprovedID
-                 //subscriber submitted id
-                 //names
-                 
                  .build();
          
          repo.save(newListing);
@@ -102,21 +79,11 @@ public class PublishedDeceasedListingTest {
          PublishedDeceasedListing oldListing = repo.findOne(id);
          
          PublishedDeceasedListing updateListing = new PublishedDeceasedListing.Builder()
-                 .setFirstName(oldListing.getFirstName())
+                 .PublishedDeceasedListing(oldListing)
                  .setSurname("Smith")
-                 .setMaidenName(oldListing.getMaidenName())
-                 .setGender(oldListing.getGender())
-                 .setDateOfBirth(oldListing.getDateOfBirth())
-                 .setDateOfDeath(oldListing.getDateOfDeath())
-                 .setGraveInscription(oldListing.getGraveInscription())
-                 .setGraveNumber(oldListing.getGraveNumber())
-                 .setImageOfBurialSite(oldListing.getImageOfBurialSite())
-                 .setLastKnownContactName(oldListing.getLastKnownContactName())
-                 .setLastKnownContactNumber(oldListing.getLastKnownContactNumber())
                  .build();
          
          repo.save(updateListing);
-         repo.delete(repo.findOne(id));
          
          id = updateListing.getPublishedListingID();
          

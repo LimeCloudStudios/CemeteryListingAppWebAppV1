@@ -126,22 +126,11 @@ public class RequiresApprovalDeceasedListingTest {
          RequiresApprovalDeceasedListing oldListing = repoList.findOne(id);
          
          RequiresApprovalDeceasedListing updateListing = new RequiresApprovalDeceasedListing.Builder()
-                 .setFirstName(oldListing.getFirstName())
+                 .RequiresApprovalDeceasedListing(oldListing)
                  .setSurname("Smith")
-                 .setMaidenName(oldListing.getMaidenName())
-                 .setGender(oldListing.getGender())
-                 .setDateOfBirth(oldListing.getDateOfBirth())
-                 .setDateOfDeath(oldListing.getDateOfDeath())
-                 .setGraveInscription(oldListing.getGraveInscription())
-                 .setGraveNumber(oldListing.getGraveNumber())
-                 .setImageOfBurialSite(oldListing.getImageOfBurialSite())
-                 .setLastKnownContactName(oldListing.getLastKnownContactName())
-                 .setLastKnownContactNumber(oldListing.getLastKnownContactNumber())
-                 .setSubscriberSubmitID(oldListing.getSubscriberSubmitID())
                  .build();
          
          repoList.save(updateListing);
-         repoList.delete(repoList.findOne(id));
          
          id = updateListing.getRequiresApprovalDeceasedListingID();
      }
