@@ -20,12 +20,13 @@ import org.springframework.stereotype.Service;
  *
  * @author Ryno
  */
-@Service
 public class CemeteryListingServiceImpl implements CemeteryListingService{
+    
     @Autowired
-    private CemeteryRepository cemRepo;
-    @Autowired
+    private CemeteryRepository cemRepo; 
+
     private PublishedDeceasedListingRepository deadRepo;
+    
     @Override
     public List<Cemetery> findAllCemeteries() {
         List<Cemetery> cemList = cemRepo.findAll();

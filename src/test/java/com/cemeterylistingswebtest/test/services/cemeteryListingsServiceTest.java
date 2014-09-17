@@ -45,7 +45,7 @@ public class cemeteryListingsServiceTest {
     
     @Test
     public void Test() {
-        cemListServ = ctx.getBean(CemeteryListingService.class);
+        /*cemListServ = ctx.getBean(CemeteryListingService.class);
         repo = ctx.getBean(CemeteryRepository.class);
         deadRepo = ctx.getBean(PublishedDeceasedListingRepository.class);
         
@@ -201,7 +201,7 @@ public class cemeteryListingsServiceTest {
          deadRepo.delete(newListing2);
          deadRepo.delete(newListing3);
          deadRepo.delete(newListing4);
-         //repo.delete(repo.findOne(id));
+         //repo.delete(repo.findOne(id));*/
          
     }
 
